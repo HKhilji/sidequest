@@ -5,6 +5,7 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { initDatabase } from './database'
 import { searchMedia, getDetails } from './tmdb'
+import { addToWatchlist, getWatchlist, updateStatus, deleteFromWatchlist } from './watchlist'
 
 function createWindow() {
   // Create the browser window.
@@ -58,6 +59,22 @@ app.whenReady().then(() => {
 
   ipcMain.handle('search-media', async (_, query) => {
     return await searchMedia(query)
+  })
+
+  ipcMain.handle('add-to-watchlist', async (_, item) => {
+    return addToWatchlist(item)
+  })
+
+  ipcMain.handle('get-watchlist', async () => {
+    return getWatchlist()
+  })
+
+  ipcMain.handle('update-status', async (_, id, status) => {
+    return updateStatus(id, status)
+  })
+
+  ipcMain.handle('delete-from-watchlist', async (_, id) => {
+    return deleteFromWatchlist(id)
   })
 
   ipcMain.handle('get-details', async (_, tmdbId, type) => {
