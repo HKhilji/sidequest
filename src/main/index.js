@@ -1,8 +1,10 @@
+import 'dotenv/config'
 import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { initDatabase } from './database'
+import { searchMedia, getDetails } from './tmdb'
 
 function createWindow() {
   // Create the browser window.
@@ -53,6 +55,14 @@ app.whenReady().then(() => {
 
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
+
+  ipcMain.handle('search-media', async (_, query) => {
+    return await searchMedia(query)
+  })
+
+  ipcMain.handle('get-details', async (_, tmdbId, type) => {
+    return await getDetails(tmdbId, type)
+  })
 
   createWindow()
 

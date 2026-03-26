@@ -1,20 +1,10 @@
-import { contextBridge } from 'electron'
-import { electronAPI } from '@electron-toolkit/preload'
+import { contextBridge, ipcRenderer } from 'electron'
 
-// Custom APIs for renderer
-const api = {}
-
-// Use `contextBridge` APIs to expose Electron APIs to
-// renderer only if context isolation is enabled, otherwise
-// just add to the DOM global.
-if (process.contextIsolated) {
-  try {
-    contextBridge.exposeInMainWorld('electron', electronAPI)
-    contextBridge.exposeInMainWorld('api', api)
-  } catch (error) {
-    console.error(error)
-  }
-} else {
-  window.electron = electronAPI
-  window.api = api
-}
+contextBridge.exposeInMainWorld('api', {
+  searchMedia: (query) => ipcRenderer.invoke('search-media', query),
+  getDetails: (tmdbId, type) => ipcRenderer.invoke('get-details', tmdbId, type),
+  addToWatchlist: (item) => ipcRenderer.invoke('add-to-watchlist', item),
+  getWatchlist: () => ipcRenderer.invoke('get-watchlist'),
+  updateStatus: (id, status) => ipcRenderer.invoke('update-status', id, status),
+  deleteFromWatchlist: (id) => ipcRenderer.invoke('delete-from-watchlist', id)
+})
