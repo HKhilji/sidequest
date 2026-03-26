@@ -14,6 +14,17 @@ function Search() {
     setLoading(false)
   }
 
+  async function handleAdd(item) {
+    await window.api.addToWatchlist({
+      tmdb_id: item.id,
+      title: item.title || item.name,
+      type: item.media_type,
+      status: 'plan_to_watch',
+      poster_url: item.poster_path
+    })
+    alert(`${item.title || item.name} added to Sidequest!`)
+  }
+
   return (
     <div>
       <form onSubmit={handleSearch}>
@@ -40,6 +51,7 @@ function Search() {
             <div>
               <h3>{item.title || item.name}</h3>
               <p>{item.media_type}</p>
+              <button onClick={() => handleAdd(item)}>+ Add to Watchlist</button>
             </div>
           </div>
         ))}
