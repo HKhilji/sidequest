@@ -1,9 +1,11 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function Search() {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState([])
   const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
 
   async function handleSearch(e) {
     e.preventDefault()
@@ -49,7 +51,12 @@ function Search() {
               />
             )}
             <div>
-              <h3>{item.title || item.name}</h3>
+              <h3
+                onClick={() => navigate(`/details/${item.media_type}/${item.id}`)}
+                style={{ cursor: 'pointer' }}
+              >
+                {item.title || item.name}
+              </h3>
               <p>{item.media_type}</p>
               <button onClick={() => handleAdd(item)}>+ Add to Watchlist</button>
             </div>

@@ -1,6 +1,7 @@
 import { HashRouter, Routes, Route, NavLink } from "react-router-dom";
 import Watchlist from './pages/Watchlist'
 import Search from './pages/Search'
+import Details from './pages/Details'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Watchlist />} />
             <Route path="/search" element={<Search />} />
+            <Route path="/details/:type/:id" element={<Details />} />
           </Routes>
         </main>
       </div>
