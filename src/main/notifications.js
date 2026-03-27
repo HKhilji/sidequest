@@ -22,6 +22,7 @@ async function checkForNewEpisodes() {
   `).all()
 
   for (const item of items) {
+    if (!item.tmdb_id) continue
     try {
       const details = await getDetails(item.tdmb_id, 'tv')
       const nextEpisode = details.next_episode_to_air  

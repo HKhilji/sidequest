@@ -21,16 +21,7 @@ function createWindow() {
       sandbox: false
     }
   })
-
-  mainWindow.webContents.session.webRequest.onHeadersReceived((details, callback) => {
-    callback({
-      responseHeaders: {
-        ...details.responseHeaders,
-        '  Content-Security-Policy': ["img-src 'self' data: https://image.tmdb.org"]
-      }
-    })
-  })
-
+  
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
     createTray(mainWindow)

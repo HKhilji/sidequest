@@ -1,4 +1,4 @@
-import { HashRouter, Routes, Route, NavLink } from "react-router-dom";
+import { HashRouter, Routes, Route, NavLink } from 'react-router-dom'
 import Watchlist from './pages/Watchlist'
 import Search from './pages/Search'
 import Details from './pages/Details'
@@ -8,12 +8,12 @@ function App() {
     <HashRouter>
       <div className="layout">
         <nav className="sidebar">
-          <h1 className="logo">Sidequest</h1>
+          <div className="logo">Sidequest</div>
           <NavLink to="/" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
             Watchlist
           </NavLink>
           <NavLink to="/search" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
-            Search 
+            Search
           </NavLink>
         </nav>
         <main className="content">
@@ -29,4 +29,3 @@ function App() {
 }
 
 export default App
-
